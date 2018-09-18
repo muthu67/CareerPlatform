@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .section-intro {
+        color: aquamarine;
+    }
+
+    .breadcrumb a {
+        color: brown;
+    }
+
+    .navbar-default {
+        background-color: #202020;
+        border-color: #e7e7e7;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="breadcrumb-wrapper">
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="ti-home"></i> Home</a></li>
+                    <li class="current">Registration</li>
+                </ol>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <form id="Login" onsubmit="return checkForm(this);" action="@Url.Action("CreateUser", "Home")" method="POST" autocomplete="off">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="firstname" id="txtFirstName" placeholder="Enter Your FirstName">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="lastname" id="txtLastName" placeholder="Enter Your LastName">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="age" id="txtAge" placeholder="Enter Your Age">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="txtEmail" placeholder="Enter Your Email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" id="txtPassword" placeholder="Enter Your Password">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="txtConfirmPassword" placeholder="Please confirm password">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="telephone" id="txtTelephone" placeholder="Enter your telephone">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="address" id="txtAddress" placeholder="Enter your Address">
+                </div>
+                <div class="form-group">
+                    <input type="file" class="form-control" id="filePicture" placeholder="Please upload your picture">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-delete">Cancel</button>
+                <div id="validation" style="color:red;"></div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    
+    function checkForm(form) {
+        var firstname, lastname,address,password,confirmpwd,telephone,age,email;
+        firstname = document.getElementById('txtFirstName').value;
+        lastname = document.getElementById('txtLastName').value;
+        txtPassword = document.getElementById('txtPassword').value;
+        txtConfirmPassword = document.getElementById('txtConfirmPassword').value;
+        address = document.getElementById('txtAddress').value;
+        telephone = document.getElementById('txtTelephone').value;
+        age = document.getElementById('txtAge').value;
+        email = document.getElementById('txtEmail').value;
+        
+        if (firstname == "") {
+            var errorMsg = "<p>Please enter firstname/p>"
+            document.getElementById("validation").innerHTML = errorMsg;            
+            return false;
+        }
+        if (lastname == "") {
+            var errorMsg = "<p>Please enter lastname</p>"
+            document.getElementById("validation").innerHTML = errorMsg;
+            form.UserName.focus();
+            return false;
+        }
+        if (!validateEmail(email.trim())) {
+            var errorMsg = "<p>Please enter valid Email Id</p>"
+            document.getElementById("validation").innerHTML = errorMsg;
+            form.UserName.focus();
+            return false;
+        }
+
+        if (txtPassword == "") {
+            var errorMsg = "<p>Please enter Password</p>"
+            document.getElementById("validation").innerHTML = errorMsg;
+            form.Password.focus();
+            return false;
+        }
+        if (txtPassword != txtConfirmPassword) {
+            var errorMsg = "<p>confirm password not matching!!</p>"
+            document.getElementById("validation").innerHTML = errorMsg;
+            return false;
+        }
+        if (age == "") {
+            var errorMsg = "<p>Please enter age/p>"
+            document.getElementById("validation").innerHTML = errorMsg;
+            return false;
+        }
+        if (email == "") {
+            var errorMsg = "<p>Please enter email</p>"
+            document.getElementById("validation").innerHTML = errorMsg;
+            form.UserName.focus();
+            return false;
+        }
+        if (telephone == "") {
+            var errorMsg = "<p>Please enter telephone/p>"
+            document.getElementById("validation").innerHTML = errorMsg;
+            return false;
+        }
+        
+        
+    }
+
+    function validateEmail(emailAddress) {
+        var regularExpression = /^([a-zA-Z0-9_\.\-\&])+\@@(([a-zA-Z0-9\-\&])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regularExpression.test(emailAddress);
+    }
+</script>
+
